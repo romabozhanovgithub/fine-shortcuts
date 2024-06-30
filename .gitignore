@@ -1,0 +1,46 @@
+# Dependency directories
+node_modules/
+
+# Build output
+out/
+dist/
+
+# VS Code specific files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# MacOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
+
+# Log files
+*.log
+
+# Package-lock files (uncomment if you want to ignore)
+# package-lock.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
