@@ -15,12 +15,24 @@
       {
         "command": "fine-shortcuts.togglePythonInlayHints",
         "title": "Toggle Python Inlay Hints"
+      },
+      {
+        "command": "fine-shortcuts.toggleErrorLens",
+        "title": "Toggle Error Lens"
       }
     ],
     "keybindings": [
       {
-        "key": "ctrl+shift+]",
+        "key": "ctrl+alt+]",
         "command": "fine-shortcuts.togglePythonInlayHints"
+      },
+      {
+        "key": "ctrl+alt+[",
+        "command": "fine-shortcuts.toggleErrorLens"
+      },
+      {
+        "key": "ctrl+alt+p",
+        "command": "gitlens.toggleLineBlame"
       }
     ]
   },
@@ -31,7 +43,8 @@
   },
   "extensionDependencies": [
     "ms-python.python",
-    "ms-python.vscode-pylance"
+    "ms-python.vscode-pylance",
+    "eamodio.gitlens"
   ],
   "devDependencies": {
     "@types/vscode": "^1.89.1",

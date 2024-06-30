@@ -37,7 +37,17 @@ const activate = (context) => {
 		);
 	});
 
-	context.subscriptions.push(togglePythonInlayHintsDisposable);
+	const toggleErrorLensDisposable = vscode.commands.registerCommand("fine-shortcuts.toggleErrorLens", function () {
+		const confTarget = vscode.ConfigurationTarget.Global;
+		const config = vscode.workspace.getConfiguration("errorLens");
+		const toggleValue = !config.get("enabled", false);
+		config.update("enabled", toggleValue, confTarget);
+	});
+
+	context.subscriptions.push(
+		toggleErrorLensDisposable,
+		togglePythonInlayHintsDisposable
+	);
 	console.log('Extension "fine-shortcuts" is now active!');
 }
 
