@@ -1,8 +1,14 @@
 {
   "name": "fine-shortcuts",
   "displayName": "Fine Shortcuts",
-  "description": "",
+  "description": "This extension provides a set of fine-grained keyboard shortcuts for VS Code.",
   "version": "0.0.1",
+  "publisher": "fine",
+  "author": {
+    "name": "Raman Bazhanau",
+    "email": "roma.bozhanov2017.11@gmail.com",
+    "url": "https://github.com/romabozhanovgithub"
+  },
   "engines": {
     "vscode": "^1.89.1"
   },
@@ -11,6 +17,37 @@
   ],
   "main": "./src/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Fine Shortcuts",
+      "properties": {
+        "fine-shortcuts.togglePythonInlayHints": {
+          "type": "object",
+          "default": {
+            "callArgumentNames": {
+              "toggleOnValue": "all",
+              "toggleOffValue": "off"
+            }
+          },
+          "properties": {
+            "callArgumentNames": {
+              "type": "object",
+              "properties": {
+                "toggleOnValue": {
+                  "type": "string",
+                  "enum": ["all", "partial"],
+                  "description": "Value of `python.inlayHints.callArgumentNames` to set when toggling this shortcut."
+                },
+                "toggleOffValue": {
+                  "type": "string",
+                  "enum": ["off", "partial"],
+                  "description": "Value of `python.inlayHints.callArgumentNames` to set when toggling this shortcut."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "commands": [
       {
         "command": "fine-shortcuts.togglePythonInlayHints",

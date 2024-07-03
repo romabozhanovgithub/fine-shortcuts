@@ -10,27 +10,34 @@ const vscode = require("vscode");
  */
 const activate = (context) => {
 	console.log('Activating "fine-shortcuts" extension');
-	const togglePythonInlayHintsDisposable = vscode.commands.registerCommand("fine-shortcuts.togglePythonInlayHints", function () {
-		const confTarget = vscode.ConfigurationTarget.Global;
-		const config = vscode.workspace.getConfiguration("python.analysis.inlayHints");
-		const toggleValue = !config.get("variableTypes", false);
 
-		config.update(
+	// Read configuration
+	const extensionConfig = vscode.workspace.getConfiguration('fine-shortcuts');
+
+	// Disposables
+	const togglePythonInlayHintsDisposable = vscode.commands.registerCommand("fine-shortcuts.togglePythonInlayHints", function () {
+		const pythonInlayHintsConfig = extensionConfig.get('togglePythonInlayHints');
+
+		const confTarget = vscode.ConfigurationTarget.Global;
+		const pythonAnalysisInlayHintsConfig = vscode.workspace.getConfiguration("python.analysis.inlayHints");
+		const toggleValue = !pythonAnalysisInlayHintsConfig.get("variableTypes", false);
+
+		pythonAnalysisInlayHintsConfig.update(
 			"variableTypes",
 			toggleValue,
 			confTarget
 		);
-		config.update(
+		pythonAnalysisInlayHintsConfig.update(
 			"callArgumentNames",
-			toggleValue ? "all" : "off",
+			toggleValue ? pythonInlayHintsConfig.callArgumentNames.toggleOnValue : pythonInlayHintsConfig.callArgumentNames.toggleOffValue,
 			confTarget
 		);
-		config.update(
+		pythonAnalysisInlayHintsConfig.update(
 			"functionReturnTypes",
 			toggleValue,
 			confTarget
 		);
-		config.update(
+		pythonAnalysisInlayHintsConfig.update(
 			"pytestParameters",
 			toggleValue,
 			confTarget
@@ -44,7 +51,18 @@ const activate = (context) => {
 		config.update("enabled", toggleValue, confTarget);
 	});
 
+	// Configuration Listener
+	const configrationListener = vscode.workspace.onDidChangeConfiguration(event => {
+		if (event.affectsConfiguration('fine-shortcuts.togglePythonInlayHints')) {
+			extensionConfig = vscode.workspace.getConfiguration('fine-shortcuts');
+			pythonInlayHintsConfig = extensionConfig.get('togglePythonInlayHints');
+		}
+	});
+
+	// Add disposables to the context
 	context.subscriptions.push(
+		configrationListener,
+		// Commands
 		toggleErrorLensDisposable,
 		togglePythonInlayHintsDisposable
 	);
@@ -60,3 +78,4 @@ module.exports = {
 	activate,
 	deactivate
 }
+
